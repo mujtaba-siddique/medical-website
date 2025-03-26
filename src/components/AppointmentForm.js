@@ -1,712 +1,261 @@
-// // import React, { useState } from 'react';
-// // import { Box, TextField, Button, Typography, Snackbar, Alert, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
-// // import theme from '../Theme';
-
-// // const doctors = [
-// //   { name: 'Dr. John Doe', specialization: 'Cardiologist' },
-// //   { name: 'Dr. Jane Smith', specialization: 'Dermatologist' },
-// //   { name: 'Dr. William Brown', specialization: 'Orthopedic Surgeon' },
-// //   { name: 'Dr. Emily Davis', specialization: 'Pediatrician' },
-// //   { name: 'Dr. Michael Wilson', specialization: 'Neurologist' },
-// //   { name: 'Dr. Sarah Johnson', specialization: 'Gynecologist' },
-// // ];
-
-// // const AppointmentForm = ({ onClose }) => {
-// //   const [formData, setFormData] = useState({
-// //     date: '',
-// //     hour: '',
-// //     minute: '',
-// //     ampm: 'AM',
-// //     doctor: '',
-// //   });
-// //   const [errors, setErrors] = useState({});
-// //   const [success, setSuccess] = useState(false);
-
-// //   // Validate the form
-// //   const validateForm = () => {
-// //     const newErrors = {};
-// //     if (!formData.date) newErrors.date = 'Date is required';
-// //     if (!formData.hour) newErrors.hour = 'Hour is required';
-// //     if (!formData.minute) newErrors.minute = 'Minute is required';
-// //     if (!formData.doctor) newErrors.doctor = 'Doctor is required';
-// //     setErrors(newErrors);
-// //     return Object.keys(newErrors).length === 0;
-// //   };
-
-// //   // Handle form submission
-// //   const handleSubmit = (e) => {
-// //     e.preventDefault();
-// //     if (validateForm()) {
-// //       console.log('Form submitted:', formData);
-// //       setSuccess(true); // Show success message
-// //       setTimeout(() => {
-// //         setSuccess(false); // Hide success message after 1 second
-// //         onClose(); // Close the modal
-// //         setFormData({ date: '', hour: '', minute: '', ampm: 'AM', doctor: '' }); // Reset the form
-// //       }, 1000);
-// //     }
-// //   };
-
-// //   // Handle input changes
-// //   const handleChange = (e) => {
-// //     const { name, value } = e.target;
-// //     setFormData({ ...formData, [name]: value });
-// //   };
-
-// //   return (
-// //     <Box
-// //       component="form"
-// //       onSubmit={handleSubmit}
-// //       sx={{
-// //         display: 'flex',
-// //         flexDirection: 'column',
-// //         gap: 2,
-// //         maxWidth: '400px',
-// //         margin: '0 auto',
-// //         padding: 3,
-// //         border: `1px solid ${theme.palette.primary.main}`,
-// //         borderRadius: '8px',
-// //       }}
-// //     >
-// //       <Typography variant="h6" sx={{ color: theme.palette.primary.main, textAlign: 'center' }}>
-// //         Book an Appointment
-// //       </Typography>
-
-// //       {/* Date Field */}
-// //       <TextField
-// //         label="Date"
-// //         type="date"
-// //         name="date"
-// //         value={formData.date}
-// //         onChange={handleChange}
-// //         error={!!errors.date}
-// //         helperText={errors.date}
-// //         InputLabelProps={{ shrink: true }}
-// //         fullWidth
-// //       />
-
-// //       {/* Time Fields */}
-// //       <Box sx={{ display: 'flex', gap: 2 }}>
-// //         <FormControl fullWidth>
-// //           <InputLabel>Hour</InputLabel>
-// //           <Select
-// //             name="hour"
-// //             value={formData.hour}
-// //             onChange={handleChange}
-// //             error={!!errors.hour}
-// //             label="Hour"
-// //           >
-// //             {Array.from({ length: 12 }, (_, i) => i + 1).map((hour) => (
-// //               <MenuItem key={hour} value={hour}>
-// //                 {hour}
-// //               </MenuItem>
-// //             ))}
-// //           </Select>
-// //           {errors.hour && (
-// //             <Typography variant="body2" sx={{ color: 'error.main', mt: 1 }}>
-// //               {errors.hour}
-// //             </Typography>
-// //           )}
-// //         </FormControl>
-
-// //         <FormControl fullWidth>
-// //           <InputLabel>Minute</InputLabel>
-// //           <Select
-// //             name="minute"
-// //             value={formData.minute}
-// //             onChange={handleChange}
-// //             error={!!errors.minute}
-// //             label="Minute"
-// //           >
-// //             {Array.from({ length: 60 }, (_, i) => i).map((minute) => (
-// //               <MenuItem key={minute} value={minute}>
-// //                 {minute < 10 ? `0${minute}` : minute}
-// //               </MenuItem>
-// //             ))}
-// //           </Select>
-// //           {errors.minute && (
-// //             <Typography variant="body2" sx={{ color: 'error.main', mt: 1 }}>
-// //               {errors.minute}
-// //             </Typography>
-// //           )}
-// //         </FormControl>
-
-// //         <FormControl fullWidth>
-// //           <InputLabel>AM/PM</InputLabel>
-// //           <Select
-// //             name="ampm"
-// //             value={formData.ampm}
-// //             onChange={handleChange}
-// //             label="AM/PM"
-// //           >
-// //             <MenuItem value="AM">AM</MenuItem>
-// //             <MenuItem value="PM">PM</MenuItem>
-// //           </Select>
-// //         </FormControl>
-// //       </Box>
-
-// //       {/* Doctor Dropdown */}
-// //       <FormControl fullWidth>
-// //         <InputLabel>Doctor</InputLabel>
-// //         <Select
-// //           name="doctor"
-// //           value={formData.doctor}
-// //           onChange={handleChange}
-// //           error={!!errors.doctor}
-// //           label="Doctor"
-// //         >
-// //           {doctors.map((doctor) => (
-// //             <MenuItem key={doctor.name} value={doctor.name}>
-// //               <Box>
-// //                 <Typography>{doctor.name}</Typography>
-// //                 <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
-// //                   {doctor.specialization}
-// //                 </Typography>
-// //               </Box>
-// //             </MenuItem>
-// //           ))}
-// //         </Select>
-// //         {errors.doctor && (
-// //           <Typography variant="body2" sx={{ color: 'error.main', mt: 1 }}>
-// //             {errors.doctor}
-// //           </Typography>
-// //         )}
-// //       </FormControl>
-
-// //       {/* Submit Button */}
-// //       <Button
-// //         type="submit"
-// //         variant="contained"
-// //         sx={{
-// //           backgroundColor: theme.palette.primary.main,
-// //           color: 'white',
-// //           '&:hover': {
-// //             backgroundColor: theme.palette.primary.dark,
-// //           },
-// //         }}
-// //       >
-// //         Send
-// //       </Button>
-
-// //       {/* Success Message */}
-// //       <Snackbar
-// //         open={success}
-// //         autoHideDuration={1000}
-// //         onClose={() => setSuccess(false)}
-// //         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-// //       >
-// //         <Alert severity="success" sx={{ width: '100%' }}>
-// //           Appointment booked successfully!
-// //         </Alert>
-// //       </Snackbar>
-// //     </Box>
-// //   );
-// // };
-
-// // export default AppointmentForm;
-
-
-
-// import React, { useState } from 'react';
-// import { Box, TextField, Button, Typography, Snackbar, Alert, MenuItem, Select, FormControl, InputLabel, IconButton } from '@mui/material';
-// import { Close } from '@mui/icons-material'; // Import close icon
-// import theme from '../Theme';
-
-// const doctors = [
-//   { name: 'Dr. John Doe', specialization: 'Cardiologist' },
-//   { name: 'Dr. Jane Smith', specialization: 'Dermatologist' },
-//   { name: 'Dr. William Brown', specialization: 'Orthopedic Surgeon' },
-//   { name: 'Dr. Emily Davis', specialization: 'Pediatrician' },
-//   { name: 'Dr. Michael Wilson', specialization: 'Neurologist' },
-//   { name: 'Dr. Sarah Johnson', specialization: 'Gynecologist' },
-// ];
-
-// const AppointmentForm = ({ onClose }) => {
-//   const [formData, setFormData] = useState({
-//     date: '',
-//     hour: '',
-//     minute: '',
-//     ampm: 'AM',
-//     doctor: '',
-//   });
-//   const [errors, setErrors] = useState({});
-//   const [success, setSuccess] = useState(false);
-
-//   // Validate the form
-//   const validateForm = () => {
-//     const newErrors = {};
-//     if (!formData.date) newErrors.date = 'Date is required';
-//     if (!formData.hour) newErrors.hour = 'Hour is required';
-//     if (!formData.minute) newErrors.minute = 'Minute is required';
-//     if (!formData.doctor) newErrors.doctor = 'Doctor is required';
-//     setErrors(newErrors);
-//     return Object.keys(newErrors).length === 0;
-//   };
-
-//   // Handle form submission
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     if (validateForm()) {
-//       console.log('Form submitted:', formData);
-//       setSuccess(true); // Show success message
-//       setTimeout(() => {
-//         setSuccess(false); // Hide success message after 1 second
-//         onClose(); // Close the modal
-//         setFormData({ date: '', hour: '', minute: '', ampm: 'AM', doctor: '' }); // Reset the form
-//       }, 1000);
-//     }
-//   };
-
-//   // Handle input changes
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     setFormData({ ...formData, [name]: value });
-//   };
-
-//   return (
-//     <Box
-//       component="form"
-//       onSubmit={handleSubmit}
-//       sx={{
-//         display: 'flex',
-//         flexDirection: 'column',
-//         gap: 2,
-//         maxWidth: '400px',
-//         margin: '0 auto',
-//         padding: 3,
-//         border: `1px solid ${theme.palette.primary.main}`,
-//         borderRadius: '8px',
-//         backgroundColor: 'background.paper',
-//         position: 'relative', // For positioning the close button
-//       }}
-//     >
-//       {/* Close Button */}
-//       <IconButton
-//         sx={{
-//           position: 'absolute',
-//           top: 8,
-//           right: 8,
-//           color: theme.palette.text.secondary,
-//         }}
-//         onClick={onClose}
-//       >
-//         <Close />
-//       </IconButton>
-
-//       <Typography variant="h6" sx={{ color: theme.palette.primary.main, textAlign: 'center' }}>
-//         Book an Appointment
-//       </Typography>
-
-//       {/* Date Field */}
-//       <TextField
-//         label="Date"
-//         type="date"
-//         name="date"
-//         value={formData.date}
-//         onChange={handleChange}
-//         error={!!errors.date}
-//         helperText={errors.date}
-//         InputLabelProps={{ shrink: true }}
-//         fullWidth
-//         sx={{
-//           '& .MuiInputBase-input': {
-//             color: theme.palette.text.secondary, // Grey text for value
-//           },
-//           '& .MuiInputLabel-root': {
-//             color: theme.palette.text.secondary, // Grey text for placeholder
-//           },
-//         }}
-//       />
-
-//       {/* Time Fields */}
-//       <Box sx={{ display: 'flex', gap: 2 }}>
-//         <FormControl fullWidth>
-//           <InputLabel sx={{ color: theme.palette.text.secondary }}>Hour</InputLabel>
-//           <Select
-//             name="hour"
-//             value={formData.hour}
-//             onChange={handleChange}
-//             error={!!errors.hour}
-//             label="Hour"
-//             sx={{
-//               '& .MuiSelect-select': {
-//                 color: theme.palette.text.secondary, // Grey text for value
-//               },
-//             }}
-//           >
-//             {Array.from({ length: 12 }, (_, i) => i + 1).map((hour) => (
-//               <MenuItem key={hour} value={hour}>
-//                 {hour}
-//               </MenuItem>
-//             ))}
-//           </Select>
-//           {errors.hour && (
-//             <Typography variant="body2" sx={{ color: 'error.main', mt: 1 }}>
-//               {errors.hour}
-//             </Typography>
-//           )}
-//         </FormControl>
-
-//         <FormControl fullWidth>
-//           <InputLabel sx={{ color: theme.palette.text.secondary }}>Minute</InputLabel>
-//           <Select
-//             name="minute"
-//             value={formData.minute}
-//             onChange={handleChange}
-//             error={!!errors.minute}
-//             label="Minute"
-//             sx={{
-//               '& .MuiSelect-select': {
-//                 color: theme.palette.text.secondary, // Grey text for value
-//               },
-//             }}
-//           >
-//             {Array.from({ length: 60 }, (_, i) => i).map((minute) => (
-//               <MenuItem key={minute} value={minute}>
-//                 {minute < 10 ? `0${minute}` : minute}
-//               </MenuItem>
-//             ))}
-//           </Select>
-//           {errors.minute && (
-//             <Typography variant="body2" sx={{ color: 'error.main', mt: 1 }}>
-//               {errors.minute}
-//             </Typography>
-//           )}
-//         </FormControl>
-
-//         <FormControl fullWidth>
-//           <InputLabel sx={{ color: theme.palette.text.secondary }}>AM/PM</InputLabel>
-//           <Select
-//             name="ampm"
-//             value={formData.ampm}
-//             onChange={handleChange}
-//             label="AM/PM"
-//             sx={{
-//               '& .MuiSelect-select': {
-//                 color: theme.palette.text.secondary, // Grey text for value
-//               },
-//             }}
-//           >
-//             <MenuItem value="AM">AM</MenuItem>
-//             <MenuItem value="PM">PM</MenuItem>
-//           </Select>
-//         </FormControl>
-//       </Box>
-
-//       {/* Doctor Dropdown */}
-//       <FormControl fullWidth>
-//         <InputLabel sx={{ color: theme.palette.text.secondary }}>Doctor</InputLabel>
-//         <Select
-//           name="doctor"
-//           value={formData.doctor}
-//           onChange={handleChange}
-//           error={!!errors.doctor}
-//           label="Doctor"
-//           sx={{
-//             '& .MuiSelect-select': {
-//               color: theme.palette.text.secondary, // Grey text for value
-//             },
-//           }}
-//         >
-//           {doctors.map((doctor) => (
-//             <MenuItem key={doctor.name} value={doctor.name}>
-//               <Box>
-//                 <Typography>{doctor.name}</Typography>
-//                 <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
-//                   {doctor.specialization}
-//                 </Typography>
-//               </Box>
-//             </MenuItem>
-//           ))}
-//         </Select>
-//         {errors.doctor && (
-//           <Typography variant="body2" sx={{ color: 'error.main', mt: 1 }}>
-//             {errors.doctor}
-//           </Typography>
-//         )}
-//       </FormControl>
-
-//       {/* Submit Button */}
-//       <Button
-//         type="submit"
-//         variant="contained"
-//         sx={{
-//           backgroundColor: theme.palette.primary.main,
-//           color: 'white',
-//           '&:hover': {
-//             backgroundColor: theme.palette.primary.dark,
-//           },
-//         }}
-//       >
-//         Send
-//       </Button>
-
-//       {/* Success Message */}
-//       <Snackbar
-//         open={success}
-//         autoHideDuration={1000}
-//         onClose={() => setSuccess(false)}
-//         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-//       >
-//         <Alert severity="success" sx={{ width: '100%' }}>
-//           Appointment booked successfully!
-//         </Alert>
-//       </Snackbar>
-//     </Box>
-//   );
-// };
-
-// export default AppointmentForm;
-
 
 
 import React, { useState } from 'react';
-import { Box, TextField, Button, Typography, Snackbar, Alert, MenuItem, Select, FormControl, InputLabel, IconButton } from '@mui/material';
-import { Close } from '@mui/icons-material'; // Import close icon
+import {
+  Box,
+  TextField,
+  Button,
+  Typography,
+  Snackbar,
+  Alert,
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
+  IconButton,
+  Avatar,
+  ListSubheader,
+  InputAdornment,
+  Card,
+  Grid,
+  LinearProgress,
+  Fade,
+} from '@mui/material';
+import {
+  Close,
+  EventAvailable,
+  Person,
+  CheckCircle,
+  Send,
+  ErrorOutline,
+} from '@mui/icons-material';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import theme from '../Theme';
 
 const doctors = [
-  { name: 'Dr. John Doe', specialization: 'Cardiologist' },
-  { name: 'Dr. Jane Smith', specialization: 'Dermatologist' },
-  { name: 'Dr. William Brown', specialization: 'Orthopedic Surgeon' },
-  { name: 'Dr. Emily Davis', specialization: 'Pediatrician' },
-  { name: 'Dr. Michael Wilson', specialization: 'Neurologist' },
-  { name: 'Dr. Sarah Johnson', specialization: 'Gynecologist' },
+  { name: 'Dr. John Doe', specialization: 'Cardiologist', avatar: 'JD' },
+  { name: 'Dr. Jane Smith', specialization: 'Dermatologist', avatar: 'JS' },
+  { name: 'Dr. William Brown', specialization: 'Orthopedic Surgeon', avatar: 'WB' },
+  { name: 'Dr. Emily Davis', specialization: 'Pediatrician', avatar: 'ED' },
+  { name: 'Dr. Michael Wilson', specialization: 'Neurologist', avatar: 'MW' },
+  { name: 'Dr. Sarah Johnson', specialization: 'Gynecologist', avatar: 'SJ' },
 ];
 
 const AppointmentForm = ({ onClose }) => {
   const [formData, setFormData] = useState({
-    date: '',
-    hour: '',
-    minute: '',
-    ampm: 'AM',
+    appointmentTime: null,
     doctor: '',
   });
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Validate the form
+  const groupedDoctors = doctors.reduce((acc, doctor) => {
+    const spec = doctor.specialization;
+    if (!acc[spec]) acc[spec] = [];
+    acc[spec].push(doctor);
+    return acc;
+  }, {});
+
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.date) newErrors.date = 'Date is required';
-    if (!formData.hour) newErrors.hour = 'Hour is required';
-    if (!formData.minute) newErrors.minute = 'Minute is required';
-    if (!formData.doctor) newErrors.doctor = 'Doctor is required';
+    if (!formData.appointmentTime) {
+      newErrors.appointmentTime = 'Please select appointment time';
+    } else if (formData.appointmentTime < new Date()) {
+      newErrors.appointmentTime = 'Time must be in future';
+    }
+    if (!formData.doctor) newErrors.doctor = 'Please select a doctor';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      console.log('Form submitted:', formData);
-      setSuccess(true); // Show success message
+    if (!validateForm()) return;
+
+    setIsSubmitting(true);
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      setSuccess(true);
       setTimeout(() => {
-        setSuccess(false); // Hide success message after 1 second
-        onClose(); // Close the modal
-        setFormData({ date: '', hour: '', minute: '', ampm: 'AM', doctor: '' }); // Reset the form
-      }, 1000);
+        onClose();
+        setFormData({ appointmentTime: null, doctor: '' });
+      }, 2000);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
-  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData(prev => ({ ...prev, [name]: value }));
+    if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }));
   };
 
   return (
-    <Box
-      component="form"
-      onSubmit={handleSubmit}
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 2,
-        maxWidth: '400px',
-        margin: '0 auto',
-        padding: 3,
-        border: `1px solid ${theme.palette.primary.main}`,
-        borderRadius: '4px', // Reduced border radius for a more rectangular shape
-        backgroundColor: 'background.paper',
-        position: 'relative', // For positioning the close button
-        boxShadow: 3, // Add a subtle shadow for depth
-      }}
-    >
-      {/* Close Button */}
-      <IconButton
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <Card
         sx={{
-          position: 'absolute',
-          top: 8,
-          right: 8,
-          color: theme.palette.text.secondary,
+          boxShadow: 24,
+          position: 'relative',
+          backgroundColor: 'transparent', // Make sure the background is transparent
         }}
-        onClick={onClose}
       >
-        <Close />
-      </IconButton>
+        {isSubmitting && <LinearProgress sx={{ position: 'absolute', top: 0, left: 0, right: 0 }} />}
 
-      <Typography variant="h6" sx={{ color: theme.palette.primary.main, textAlign: 'center' }}>
-        Book an Appointment
-      </Typography>
-
-      {/* Date Field */}
-      <TextField
-        label="Date"
-        type="date"
-        name="date"
-        value={formData.date}
-        onChange={handleChange}
-        error={!!errors.date}
-        helperText={errors.date}
-        InputLabelProps={{ shrink: true }}
-        fullWidth
-        sx={{
-          '& .MuiInputBase-input': {
-            color: theme.palette.text.secondary, // Grey text for value
-          },
-          '& .MuiInputLabel-root': {
-            color: theme.palette.text.secondary, // Grey text for placeholder
-          },
-        }}
-      />
-
-      {/* Time Fields */}
-      <Box sx={{ display: 'flex', gap: 2 }}>
-        <FormControl fullWidth>
-          <InputLabel sx={{ color: theme.palette.text.secondary }}>Hour</InputLabel>
-          <Select
-            name="hour"
-            value={formData.hour}
-            onChange={handleChange}
-            error={!!errors.hour}
-            label="Hour"
-            sx={{
-              '& .MuiSelect-select': {
-                color: theme.palette.text.secondary, // Grey text for value
-              },
-            }}
-          >
-            {Array.from({ length: 12 }, (_, i) => i + 1).map((hour) => (
-              <MenuItem key={hour} value={hour}>
-                {hour}
-              </MenuItem>
-            ))}
-          </Select>
-          {errors.hour && (
-            <Typography variant="body2" sx={{ color: 'error.main', mt: 1 }}>
-              {errors.hour}
-            </Typography>
-          )}
-        </FormControl>
-
-        <FormControl fullWidth>
-          <InputLabel sx={{ color: theme.palette.text.secondary }}>Minute</InputLabel>
-          <Select
-            name="minute"
-            value={formData.minute}
-            onChange={handleChange}
-            error={!!errors.minute}
-            label="Minute"
-            sx={{
-              '& .MuiSelect-select': {
-                color: theme.palette.text.secondary, // Grey text for value
-              },
-            }}
-          >
-            {Array.from({ length: 60 }, (_, i) => i).map((minute) => (
-              <MenuItem key={minute} value={minute}>
-                {minute < 10 ? `0${minute}` : minute}
-              </MenuItem>
-            ))}
-          </Select>
-          {errors.minute && (
-            <Typography variant="body2" sx={{ color: 'error.main', mt: 1 }}>
-              {errors.minute}
-            </Typography>
-          )}
-        </FormControl>
-
-        <FormControl fullWidth>
-          <InputLabel sx={{ color: theme.palette.text.secondary }}>AM/PM</InputLabel>
-          <Select
-            name="ampm"
-            value={formData.ampm}
-            onChange={handleChange}
-            label="AM/PM"
-            sx={{
-              '& .MuiSelect-select': {
-                color: theme.palette.text.secondary, // Grey text for value
-              },
-            }}
-          >
-            <MenuItem value="AM">AM</MenuItem>
-            <MenuItem value="PM">PM</MenuItem>
-          </Select>
-        </FormControl>
-      </Box>
-
-      {/* Doctor Dropdown */}
-      <FormControl fullWidth>
-        <InputLabel sx={{ color: theme.palette.text.secondary }}>Doctor</InputLabel>
-        <Select
-          name="doctor"
-          value={formData.doctor}
-          onChange={handleChange}
-          error={!!errors.doctor}
-          label="Doctor"
+        {/* Header */}
+        <Box
           sx={{
-            '& .MuiSelect-select': {
-              color: theme.palette.text.secondary, // Grey text for value
-            },
+            bgcolor: 'primary.main',
+            p: 3,
+            position: 'relative',
+            background: 'linear-gradient(45deg, #1976d2 30%, #2196f3 90%)',
           }}
         >
-          {doctors.map((doctor) => (
-            <MenuItem key={doctor.name} value={doctor.name}>
-              <Box>
-                <Typography>{doctor.name}</Typography>
-                <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
-                  {doctor.specialization}
-                </Typography>
-              </Box>
-            </MenuItem>
-          ))}
-        </Select>
-        {errors.doctor && (
-          <Typography variant="body2" sx={{ color: 'error.main', mt: 1 }}>
-            {errors.doctor}
-          </Typography>
-        )}
-      </FormControl>
+          <IconButton
+            sx={{ position: 'absolute', top: 8, right: 8, color: 'white' }}
+            onClick={onClose}
+          >
+            <Close />
+          </IconButton>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <EventAvailable sx={{ fontSize: 40, color: 'white' }} />
+            <Typography variant="h5" sx={{ color: 'white', fontWeight: 600 }}>
+              New Appointment
+            </Typography>
+          </Box>
+        </Box>
 
-      {/* Submit Button */}
-      <Button
-        type="submit"
-        variant="contained"
-        sx={{
-          backgroundColor: theme.palette.primary.main,
-          color: 'white',
-          '&:hover': {
-            backgroundColor: theme.palette.primary.dark,
-          },
-        }}
-      >
-        Send
-      </Button>
+        {/* Form Content */}
+        <Box sx={{ p: 4 }}>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <DateTimePicker
+                label="Appointment Time"
+                value={formData.appointmentTime}
+                onChange={(newValue) => setFormData(prev => ({ ...prev, appointmentTime: newValue }))}
+                minDate={new Date()}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    fullWidth
+                    error={!!errors.appointmentTime}
+                    helperText={errors.appointmentTime}
+                    InputProps={{
+                      ...params.InputProps,
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <EventAvailable sx={{ color: 'action.active' }} />
+                        </InputAdornment>
+                      ),
+                    }}
+                    sx={{
+                      '& .MuiOutlinedInput-root': {
+                        borderRadius: '8px',
+                      },
+                    }}
+                  />
+                )}
+              />
+            </Grid>
 
-      {/* Success Message */}
-      <Snackbar
-        open={success}
-        autoHideDuration={1000}
-        onClose={() => setSuccess(false)}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-      >
-        <Alert severity="success" sx={{ width: '100%' }}>
-          Appointment booked successfully!
-        </Alert>
-      </Snackbar>
-    </Box>
+            <Grid item xs={12}>
+              <FormControl fullWidth error={!!errors.doctor}>
+                <InputLabel>Select Doctor</InputLabel>
+                <Select
+                  name="doctor"
+                  value={formData.doctor}
+                  onChange={handleChange}
+                  label="Select Doctor"
+                  MenuProps={{ PaperProps: { sx: { maxHeight: 300 } } }}
+                  renderValue={(selected) => {
+                    const doctor = doctors.find(d => d.name === selected);
+                    return doctor ? (
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                        <Avatar sx={{ bgcolor: 'primary.main' }}>{doctor.avatar}</Avatar>
+                        <Box>
+                          <Typography>{doctor.name}</Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            {doctor.specialization}
+                          </Typography>
+                        </Box>
+                      </Box>
+                    ) : '';
+                  }}
+                >
+                  {Object.entries(groupedDoctors).map(([spec, docs]) => [
+                    <ListSubheader key={spec} sx={{ bgcolor: 'background.default' }}>
+                      <Typography variant="subtitle1" fontWeight={600}>
+                        {spec}
+                      </Typography>
+                    </ListSubheader>,
+                    ...docs.map(doctor => (
+                      <MenuItem key={doctor.name} value={doctor.name} sx={{ py: 1.5 }}>
+                        <Avatar sx={{ bgcolor: 'primary.main', mr: 2 }}>{doctor.avatar}</Avatar>
+                        <Box sx={{ flexGrow: 1 }}>
+                          <Typography>{doctor.name}</Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            {doctor.specialization}
+                          </Typography>
+                        </Box>
+                        {formData.doctor === doctor.name && (
+                          <CheckCircle sx={{ color: 'success.main', ml: 2 }} />
+                        )}
+                      </MenuItem>
+                    )),
+                  ])}
+                </Select>
+                {errors.doctor && (
+                  <Box sx={{ display: 'flex', alignItems: 'center', mt: 1, color: 'error.main' }}>
+                    <ErrorOutline sx={{ fontSize: 16, mr: 0.5 }} />
+                    <Typography variant="body2">{errors.doctor}</Typography>
+                  </Box>
+                )}
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Button
+                type="submit"
+                variant="contained"
+                fullWidth
+                onClick={handleSubmit}
+                disabled={isSubmitting}
+                sx={{
+                  height: 48,
+                  borderRadius: '8px',
+                  background: 'linear-gradient(45deg, #1976d2 30%, #2196f3 90%)',
+                  '&:hover': { opacity: 0.9 },
+                  transition: 'all 0.3s ease',
+                }}
+              >
+                <Send sx={{ mr: 1 }} />
+                {isSubmitting ? 'Booking...' : 'Confirm Appointment'}
+              </Button>
+            </Grid>
+          </Grid>
+        </Box>
+
+        <Snackbar
+          open={success}
+          autoHideDuration={2000}
+          onClose={() => setSuccess(false)}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          TransitionComponent={Fade}
+        >
+          <Alert
+            icon={<CheckCircle fontSize="inherit" />}
+            severity="success"
+            sx={{ width: '100%', boxShadow: 3 }}
+          >
+            Appointment booked successfully!
+          </Alert>
+        </Snackbar>
+      </Card>
+    </LocalizationProvider>
   );
 };
 

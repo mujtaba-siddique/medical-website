@@ -470,7 +470,7 @@ const Testimonials = () => {
             <Box
               sx={{
                 width: 300,
-                height: 300,
+                height: 250,
                 backgroundColor: 'white',
                 borderRadius: 4,
                 padding: 3,
@@ -562,7 +562,7 @@ const Testimonials = () => {
               </Typography>
 
               {/* Role */}
-              <Typography
+              {/* <Typography
                 variant="body2"
                 sx={{
                   textAlign: 'center',
@@ -573,7 +573,7 @@ const Testimonials = () => {
                 }}
               >
                 {testimonial.role}
-              </Typography>
+              </Typography> */}
 
               {/* Testimonial Text */}
               <Typography
